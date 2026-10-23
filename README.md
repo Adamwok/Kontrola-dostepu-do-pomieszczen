@@ -1,1 +1,1 @@
-# Kontrola-dost-pu-do-pomieszcze-
+# Kontrola-dostępu-do-pomieszczeń
