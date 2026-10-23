@@ -2,4 +2,3 @@
 .git
 Dockerfile
 .dockerignore
-nginx.conf

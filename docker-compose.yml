@@ -1,5 +1,4 @@
 name: kontrola-dostepu
-version: '3.8'
 services:
   db:
     image: postgres:17-alpine
@@ -24,7 +23,7 @@ services:
       db:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8000/health')"]
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://localhost:8000/healthy')"]
       interval: 5s
       timeout: 5s
       retries: 3
