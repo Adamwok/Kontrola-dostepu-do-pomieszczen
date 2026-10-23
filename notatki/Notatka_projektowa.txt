@@ -1,0 +1,4 @@
+Zajęcia 1:
+- Wybór tematu: 47. Kontrola dostępu do pomieszczeń.
+- Utworzenie repozytorium.
+- Pierwszy commit.
