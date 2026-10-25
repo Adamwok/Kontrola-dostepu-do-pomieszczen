@@ -1,4 +1,9 @@
 Zajęcia 1:
-- Wybór tematu: 47. Kontrola dostępu do pomieszczeń.
-- Utworzenie repozytorium.
-- Pierwszy commit.
+Wybrany temat projektowy: 47. Kontrola dostępu do pomieszczeń.
+Pierwsze popełnienia:
+    1.Zainicjowano repozytorium.
+    2.Naprawiono literówkę w nazwie repozytorium i pliku README.md.
+    3.Zainicjowana została struktura bazowa projektu (szkielet).
+    4.Dodano szkielet 3 kontenerów: backend, frontend oraz DB, na podstawie wiedzy z części wykładowej, dodatkowo sprawdzone za pomocą AI.
+    5.Dodano pole nazwa w pliku docker-compose.yml.
+    6.Naprawione punkty końcowe w backend oraz frontend. Dodano testowy kod, który testuje działanie połączenie pomiędzy backend a DB.
