@@ -19,7 +19,7 @@ Projektmskłada się z trzech odizolowanych kontenerów zarządzanych przez `doc
 * Zainstalowany **Docker** oraz **Docker Compose**
 
 ### 2. Konfiguracja zmiennych środowiskowych
-Należy skopiować plik przykładowy `.env.example` do pliku `.env` w głównym katalogu projektu
+Należy skopiować plik przykładowy `.env.example` do pliku `.env` w głównym katalogu projektu.
 
 Przykładowa zawartość pliku `.env`:
 ```env
