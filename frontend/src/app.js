@@ -1,4 +1,4 @@
-fetch('/api/healthy')
+fetch('/api/health')
     .then(function(response){
         return response.json();
     })

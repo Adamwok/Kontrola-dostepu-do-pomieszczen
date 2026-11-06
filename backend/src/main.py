@@ -8,7 +8,7 @@ app = FastAPI(root_path="/api")
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 
-@app.get("/healthy")
+@app.get("/health")
 def get_status():
     try:
         with engine.connect() as conn:
