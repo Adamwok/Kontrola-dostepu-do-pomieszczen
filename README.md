@@ -36,7 +36,7 @@ docker compose up --build -d
 
 ### 4. Weryfikacja działania
 * **Aplikacja webowa (Frontend):** `http://localhost:8080`
-* **Endpoint statusu (przez proxy):** `http://localhost:8080/api/healthy`
+* **Endpoint statusu (przez proxy):** `http://localhost:8080/api/health`
 
 Aby zatrzymać kontenery, należy użyć polecenia:
 ```bash
