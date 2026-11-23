@@ -1,0 +1,21 @@
+Zajęcia 1:
+Wybrany temat projektowy: 47. Kontrola dostępu do pomieszczeń.
+Pierwsze popełnienia:
+    1.Zainicjowano repozytorium.
+    2.Naprawiono literówkę w nazwie repozytorium i pliku README.md.
+    3.Zainicjowana została struktura bazowa projektu (szkielet).
+    4.Dodano szkielet 3 kontenerów: backend, frontend oraz DB, na podstawie wiedzy z części wykładowej, dodatkowo sprawdzone za pomocą AI.
+    5.Dodano pole nazwa w pliku docker-compose.yml.
+    6.Naprawione punkty końcowe w backend oraz frontend. Dodano testowy kod, który testuje działanie połączenie pomiędzy backend a DB.
+
+Zajęcia 2:
+    Udane uruchomienie trzech kontenerów. Kontenery łączą się ze sobą przez sieć wewnętrzną. Dodano mechanizm healthcheck: frontend sprawdza stan backend, backend sprawdza stan bazy danych.
+    Backend pomyślnie testuje połączenie z bazą danych. Frontend pobiera z backendu JSON ze statusem połączenia z bazą danych.
+
+Zajęcia 3:
+    Dodano 4 endpoionty
+        - GET /rooms
+        - GET /rooms/{room_id}
+        - POST /access
+        - DELETE /rooms/{room_id}
+    
