@@ -1,0 +1,483 @@
+:root {
+    --bg: #f4f6f8;
+    --surface: #fff;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --muted: #656d76;
+    --primary: #0969da;
+    --primary-hover: #0550ae;
+    --ok-bg: #dafbe1;
+    --ok-text: #1a7f37;
+    --deny-bg: #ffebe9;
+    --deny-text: #cf222e;
+    --door: #4a5568;
+    --user-card-active: rgba(45, 164, 78, 0.5);
+    --user-card-inactive: rgba(207, 34, 46, 0.5);
+    --reader-screen-ok: #2da44e;
+    --reader-scree-deny: #cf222e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.app-header {
+    display: flex;
+    justify-self: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.system-status {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.app-nav {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    border-radius: 0;
+}
+
+.nav-btn.active {
+    color: var(--text);
+    font-weight: 600;
+    border-bottom-color: var(--primary);
+    border-radius: 0;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.15rem;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card-header-row h2 {
+    margin: 0;
+}
+
+.simulator-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 720px) {
+    .simulator-stage {
+        grid-template-columns: 1fr;
+    }
+}
+
+.door-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.door-plaque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: #1f2328;
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 2px solid #8b949e;
+    width: 315px;
+    max-width: 100%;
+}
+
+.plaque-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #8b949e;
+}
+
+.door-plaque select {
+    background: #2d333b;
+    color: #fff;
+    border: 1px solid #444c56;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.plaque-meta {
+    font-size: 0.8rem;
+    color: #adbac7;
+}
+
+.door-assembly {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.door-frame {
+    margin: 0;
+    width: 140px;
+    height: 210px;
+    border: 6px solid #2d3748;
+    border-bottom: 0;
+    background: #e2e8f0;
+    perspective: 500px;
+    display: flex;
+}
+
+.door-leaf {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--door);
+    position: relative;
+    transform-origin: left center;
+    transition: transform 0.5s ease, background-color 0.3s ease;
+}
+
+.door-frame.open .door-leaf {
+    transform: rotateY(55deg);
+}
+
+.door-handle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 18px;
+    height: 6px;
+    background: #cbd5e0;
+    border-radius: 3px;
+}
+
+.reader-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background: #24292f;
+    color: #ffffff;
+    padding: 16px 12px;
+    border-radius: 8px;
+    width: 155px;
+}
+
+.reader-screen {
+    width: 100%;
+    padding: 8px 6px;
+    border-radius: 4px;
+    background: #32383f;
+    color: #adbac7;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.reader-screen.ok {
+    background: #2da44e;
+    color: #ffffff;
+}
+
+.reader-screen.deny {
+    background: #cf222e;
+    color: #ffffff;
+}
+
+.reader-reason {
+    font-size: 0.72rem;
+    color: #adbac7;
+    text-align: center;
+    min-height: 2.2em;
+    line-height: 1.2;
+}
+
+.reader-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: #8b949e;
+}
+
+.scan-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.scan-btn:hover {
+    background: var(--primary-hover);
+}
+
+.rfid-card {
+    width: 320px;
+    max-width: 100%;
+    aspect-ratio: 1.586 / 1;
+    background: linear-gradient(135deg, #1b365d, #0969da);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(9, 105, 218, 0.25);
+}
+
+.rfid-card:hover {
+    filter: brightness(1.06);
+}
+
+.card-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.card-chip {
+  width: 40px;
+  height: 28px;
+  background: #e2b93b;
+  border-radius: 5px;
+  display: block;
+}
+
+.card-owner {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.card-meta {
+  font-size: 0.9rem;
+  font-family: monospace;
+  opacity: 0.95;
+}
+
+.card-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.card-config {
+  width: 320px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg);
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+
+.card-config label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.card-config select {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+}
+
+
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+input, select, button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+button[type="submit"], .btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    cursor: pointer;
+}
+
+.action-btn {
+    background: var(--surface);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    margin-right: 4px;
+}
+
+.action-btn:hover {
+    background: var(--bg);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 8px;
+    text-align: left;
+}
+
+td .badge {
+  min-width: 105px;
+  text-align: center;
+}
+
+th {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-ok {
+    background-color: var(--ok-bg);
+    color: var(--ok-text);
+}
+
+.badge-deny {
+    background-color: var(--deny-bg);
+    color: var(--deny-text);
+}
+
+.result-box {
+    margin: 0;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.error-msg {
+    margin: 0 0 8px;
+    color: var(--deny-text);
+    font-size: 0.85rem;
+}
+
+dialog {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-form h3 {
+    margin: 0;
+}
+
+.modal-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+}
+
+.modal-form .checkbox-label {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.model-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin: 8px 0 0;
+    padding: 0;
+}
