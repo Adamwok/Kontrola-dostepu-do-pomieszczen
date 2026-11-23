@@ -5,9 +5,186 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontrola dostępu do pomieszczeń</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="dane">Czekam na dane...</div>
+    <header class="app-header">
+        <h1>Kontrola dostępu do pomieszczeń</h1>
+        <p class="system-status">
+            Status: <span id="health-status" class="badge">Sprawdzanie...</span>
+        </p>
+    </header>
+
+    <nav class="app-nav">
+        <button class="nav-btn active" data-view="simulator">Symulator drzwi</button>
+        <button class="nav-btn" data-view="admin">Panel administracyjny</button>
+    </nav>
+
+    <main>
+        <section id="view-simulator" class="view active">
+            <h2 id="sim-heading">Symulator dostępu</h2>
+            <article class="card simulator-stage">
+                <section class="door-unit">
+                    <label for="sim-room-select" class="door-plaque">
+                        <span class="plaque-label">POMIESZCZENIE</span>
+                        <select id="sim-room-select"></select>
+                        <span id="sim-room-meta" class="plaque-meta">Poziom: -</span>
+                    </label>
+
+                <section class="door-assembly">
+                    <figure id="door-frame" class="door-frame">
+                    <span class="door-leaf">
+                        <span class="door-handle"></span>
+                    </span>
+                    </figure>
+
+                    <aside class="reader-box">
+                    <span class="reader-label">CZYTNIK RFID</span>
+                    <span id="reader-status" class="reader-screen">GOTOWY</span>
+                    <button type="button" id="scan-btn" class="scan-btn">Przyłóż kartę</button>
+                    </aside>
+                </section>
+
+                </section>
+
+                <section class="card-unit">
+                <button type="button" id="rfid-card" class="rfid-card">
+                    <span class="card-chip"></span>
+                    <span id="card-display-owner" class="card-owner">---</span>
+                    <span class="card-meta">
+                    <span id="card-display-id">---</span> | <span id="card-display-level">Poziom: -</span>
+                    </span>
+                    <span id="card-display-status" class="card-status">---</span>
+                </button>
+
+                <form id="card-config" class="card-config hidden">
+                    <label for="sim-user-select">Wybierz użytkownika:</label>
+                    <select id="sim-user-select"></select>
+                </form>
+                </section>
+            </article>
+
+            <article>
+                <h2>Ostatnie zdarzenia dla wybranego pomieszczenia</h2>
+                <table id="sim-logs-table">
+                <thead>
+                    <tr>
+                    <th>Czas</th>
+                    <th>ID karty</th>
+                    <th>Użytkownik</th>
+                    <th>Wynik</th>
+                    <th>Powód</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                </table>
+            </article>
+        </section>
+
+
+        <section id="view-admin" class="view">
+            <h2 id="admin-heading">Panel administracyjny</h2>
+            
+            <article class="card">
+                <h2>Pomieszczenia</h2>
+                <form id="room-form" class="inline-form">
+                    <input id="room-code" type="text" placeholder="Kod (np. SERW-02)" required />
+                    <input id="room-name" type="text" placeholder="Nazwa pomieszczenia" required />
+                    <input id="room-level" type="number" min="1" max="5" value="1" required />
+                    <button type="submit">Dodaj pokój</button>
+                </form>
+                <p id="room-error" class="error-msg"></p>
+                <table id="rooms-table">
+                    <thead>
+                        <tr>
+                            <th>Kod</th>
+                            <th>Nazwa</th>
+                            <th>Poziom</th>
+                            <th>Status</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <h2>Użytkownicy i karty</h2>
+                <form id="user-form" class="inline-form">
+                    <input id="user-first-name" type="text" placeholder="Imię" required>
+                    <input id="user-last-name" type="text" placeholder="Nazwisko" required>
+                    <input id="user-card" type="text" placeholder="ID karty" required>
+                    <input id="user-level" type="number" min="1" max="5" value="1" required>
+                    <button type="submit">Dodaj użytkownika</button>
+                </form>
+                <p id="user-error" class="error-msg"></p>
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>ID karty</th>
+                            <th>Poziom</th>
+                            <th>Status</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </article>
+
+            <article class="card">
+                <header class="card-header-row">
+                    <h2>Pełna historia logów</h2>
+                    <select id="log-filter-room"></select>
+                </header>
+            <table id="admin-logs-table">
+            <thead>
+                <tr>
+                <th>Czas</th>
+                <th>ID karty</th>
+                <th>Użytkownik</th>
+                <th>Pomieszczenie</th>
+                <th>Wynik</th>
+                <th>Powód</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            </table>
+            </article>
+
+        </section>
+    </main>
+
+    <dialog id="edit-room-dialog">
+        <form id="edit-room-form" method="dialog" class="modal-form">
+            <h3>Edycja pomieszczenia <span id="edit-room-code"></span></h3>
+            <input type="hidden" id="edit-room-id" />
+            <label>Nazwa: <input id="edit-room-name" type="text" required /></label>
+            <label>Wymagany poziom (1-5): <input id="edit-room-level" type="number" min="1" max="5" required /></label>
+            <label class="checkbox-label"><input id="edit-room-active" type="checkbox" />Pomieszczenie aktywne</label>
+            <menu class="modal-actions">
+                <button type="button" id="cancel-room-edit">Anuluj</button>
+                <button type="submit" class="btn-primary">Zapisz</button>
+            </menu>
+        </form>
+    </dialog>
+
+    <dialog id="edit-user-dialog">
+        <form id="edit-user-form" method="dialog" class="modal-form">
+            <h3>Edycja użytkownika <span id="edit-user-card"></span></h3>
+            <input type="hidden" id="edit-user-id" />
+            <label>Imię: <input id="edit-user-first" type="text" required /></label>
+            <label>Nazwisko: <input id="edit-user-last" type="text" required /></label>
+            <label>Poziom dostępu (1-5): <input id="edit-user-level" type="number" min="1" max="5" required /></label>
+            <label class="checkbox-label"><input id="edit-user-active" type="checkbox" /> Karta aktywna</label>
+            <menu class="modal-actions">
+                <button type="button" id="cancel-user-edit">Anuluj</button>
+                <button type="submit" class="btn-primary">Zapisz</button>
+            </menu>
+        </form>
+    </dialog>
+
     <script src="app.js"></script>
 </body>
 </html>
