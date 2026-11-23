@@ -6,6 +6,6 @@ fetch('/api/health')
         document.getElementById("dane").innerHTML = JSON.stringify(data);
     })
     .catch(function(error) {
-        console.log("Blad polaczenia");
-        document.getElementById("dane").innerHTML = "Brak danych"
+        console.log("Blad polaczenia z backendem");
+        document.getElementById("dane").innerHTML = "Błąd połączenia z backendem"
     })
