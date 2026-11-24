@@ -38,12 +38,14 @@ async function loadHealth() {
         const ok = data.database === "connected";
         el.textContent = ok ? "Online (DB połączona)" : "Błąd bazy danych";
         el.className = `badge ${ok ? "badge-ok" : "badge-deny"}`;
-    } catch {
-        el.textContent = "Backend niedostępny";
+    } catch (err) {
+        el.textContent = err.message === "Database disconnected" ? "Błąd bazy danych" : "Backend niedostępny";
         el.className = "badge badge-deny";
     }
 }
 
+
+//Funkcja została zrobiona za pomocą AI
 function updateRoomPlaqueMeta() {
     const code = document.querySelector("#sim-room-select").value;
     const room = roomsCache.find((r) => r.code === code);
@@ -55,6 +57,7 @@ function updateRoomPlaqueMeta() {
     meta.textContent = `Wymagany poziom: ${room.min_access_level} | ${room.is_active ? "AKTYWNE" : "ZABLOKOWANE"}`;
 }
 
+//Funkcja zrobiona na podstawie funkcji updateRoomPlaqueMeta
 function updateCardVisual() {
     const selectVal = document.querySelector("#sim-user-select").value;
     const ownerEl = document.querySelector("#card-display-owner");
@@ -71,7 +74,7 @@ function updateCardVisual() {
     statusEl.textContent = user.is_active ? "Aktywna" : "Nieaktywna";
 }
 
-
+//Funkcja zrobiona na podstawie funkcji updateRoomPlaqueMeta
 async function loadRooms() {
     roomsCache = await api("/rooms");
 
@@ -103,8 +106,10 @@ async function loadRooms() {
         </tr>`
         )
         .join("");
+        //.map() zostało podpowiedziane przez AI
 }
 
+//Funkcja została zrobiona ręcznie na podstawie przedstawionych wcześniej zrobionych funkcji przez AI
 async function loadUsers() {
     usersCache = await api("/users");
 
@@ -136,6 +141,7 @@ async function loadUsers() {
         .join("");
 }
 
+//Funkcja została zrobiona ręcznie na podstawie przedstawionych wcześniej zrobionych funkcji przez AI
 async function loadSimLogs() {
     const roomCode = document.querySelector("#sim-room-select").value;
     if (!roomCode) return;
@@ -152,8 +158,10 @@ async function loadSimLogs() {
         </tr>`
         )
         .join("");
+        //funkcja z datą zaproponowana została przez AI
 }
 
+//Funkcja została zrobiona ręcznie na podstawie przedstawionych wcześniej zrobionych funkcji przez AI
 async function loadAdminLogs() {
     const roomCode = document.querySelector("#log-filter-room").value;
     const query = roomCode ? `?limit=50&room_code=${encodeURIComponent(roomCode)}` : "?limit=50";
@@ -173,6 +181,7 @@ async function loadAdminLogs() {
         .join("");
 }
 
+//Funkcja została zrobiona ręcznie na podstawie przedstawionych wcześniej zrobionych funkcji przez AI
 function setupSimulator() {
     const roomSelect = document.querySelector("#sim-room-select");
     const cardBtn = document.querySelector("#rfid-card");
@@ -236,6 +245,7 @@ function setupSimulator() {
     });
 }
 
+//Funkcja została zrobiona ręcznie na podstawie przedstawionych wcześniej zrobionych funkcji przez AI
 function setupAdmin() {
     const roomDialog = document.querySelector("#edit-room-dialog");
     const userDialog = document.querySelector("#edit-user-dialog");
@@ -360,11 +370,12 @@ function setupAdmin() {
 }
 
 async function init() {
-    setupNavigation();
-    setupSimulator();
-    setupAdmin();
-    await Promise.all([loadHealth(), loadRooms(), loadUsers()]);
-    await Promise.all([loadSimLogs(), loadAdminLogs()]);
+  setupNavigation();
+  setupSimulator();
+  setupAdmin();
+  await Promise.all([loadHealth(), loadRooms(), loadUsers()]);
+  await Promise.all([loadSimLogs(), loadAdminLogs()]);
+  setInterval(loadHealth, 5000);//Funkcja wywołująca odświeżanie stanu połączenia z bazą i backendem
 }
 
 init();
