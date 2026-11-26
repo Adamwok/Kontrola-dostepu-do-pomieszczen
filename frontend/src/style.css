@@ -275,7 +275,7 @@ body {
     width: 320px;
     max-width: 100%;
     aspect-ratio: 1.586 / 1;
-    background: linear-gradient(135deg, #1b365d, #0969da);
+    background: #0969da;
     color: #ffffff;
     border: none;
     border-radius: 12px;
